@@ -26,10 +26,11 @@ public class Grappling : MonoBehaviour
     public KeyCode grappleKey = KeyCode.Mouse1;
 
     private bool grappling;
-
+    private SwingingDone swingingDone;
     private void Start()
     {
         pm = GetComponent<PlayerMovementGrappling>();
+        swingingDone = GetComponent<SwingingDone>();
     }
 
     private void Update()
@@ -46,12 +47,13 @@ public class Grappling : MonoBehaviour
             lr.SetPosition(0, gunTip.position);
     }
 
-    private void StartGrapple()
+    public void StartGrapple()
     {
         if (grapplingCdTimer > 0) return;
 
         // deactivate active swinging
-        GetComponent<SwingingDone>().StopSwing();
+    
+        swingingDone.StopSwing();
 
         grappling = true;
 
@@ -72,7 +74,19 @@ public class Grappling : MonoBehaviour
         }
 
         lr.enabled = true;
-        lr.SetPosition(1, grapplePoint);
+    
+
+        try
+        {
+            lr.SetPosition(1, grapplePoint);
+        }
+        catch (System.Exception)
+        {
+
+            throw;
+        }
+        
+
     }
 
     private void ExecuteGrapple()
@@ -94,12 +108,12 @@ public class Grappling : MonoBehaviour
     public void StopGrapple()
     {
         pm.freeze = false;
-
         grappling = false;
 
         grapplingCdTimer = grapplingCd;
 
         lr.enabled = false;
+      
     }
 
     public bool IsGrappling()

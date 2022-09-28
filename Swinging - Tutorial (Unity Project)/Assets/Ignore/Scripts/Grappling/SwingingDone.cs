@@ -31,6 +31,13 @@ public class SwingingDone : MonoBehaviour
     public KeyCode swingKey = KeyCode.Mouse0;
 
 
+    private Grappling grappl;
+
+    private void Start()
+    {
+        grappl = GetComponent<Grappling>();
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(swingKey)) StartSwing();
@@ -94,8 +101,8 @@ public class SwingingDone : MonoBehaviour
         if (predictionHit.point == Vector3.zero) return;
 
         // deactivate active grapple
-        if(GetComponent<Grappling>() != null)
-            GetComponent<Grappling>().StopGrapple();
+        if(grappl != null)
+            grappl.StopGrapple();
         pm.ResetRestrictions();
 
         pm.swinging = true;

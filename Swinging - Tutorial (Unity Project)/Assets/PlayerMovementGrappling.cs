@@ -68,9 +68,10 @@ public class PlayerMovementGrappling : MonoBehaviour
 
     public bool activeGrapple;
     public bool swinging;
-
+    private DualHooks dualHooks;
     private void Start()
     {
+        dualHooks = GetComponent<DualHooks>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
@@ -286,7 +287,8 @@ public class PlayerMovementGrappling : MonoBehaviour
             enableMovementOnNextTouch = false;
             ResetRestrictions();
 
-            GetComponent<DualHooks>().CancelActiveGrapples();
+            
+            dualHooks?.CancelActiveGrapples();
         }
     }
 
